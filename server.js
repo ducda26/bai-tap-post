@@ -1,8 +1,14 @@
 var express = require ('express');
 var app = express();
+const bodyParser = require('body-parser') //body
+
+var port = 3000;
 
 app.set('view engine', 'pug');
 app.set('views', './views');
+
+app.use(bodyParser.json()) //body for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })) //body for parsing application/x-www-form-urlencoded
 
 var todos = [
             {id:1, name:'Đị chợ'},
@@ -35,7 +41,18 @@ app.get('/todos/search', function(req, res) {
     
 })
 
-var port = 3000;
+app.get('/todos/create', function(req, res) {
+    res.render('todos/create')
+})
+
+app.post('/todos/create', function(req, res) {
+    todos.push(req.body);
+    res.redirect('/todos') // sau khi phan hoi ve lai trang index
+    // res.render('users/create')
+})
+
+
+
 app.listen(port,function(){
     console.log(`Example app listening at http://localhost:${port}`)
 })
