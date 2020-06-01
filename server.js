@@ -26,7 +26,7 @@ app.get('/todos', function(req, res) {
 app.get('/todos/search', function(req, res) {
     var q = req.query.q;
     var matchedUsers = todos.filter(function(todo){
-        return todo.name.indexOf(q) !== -1;
+        return todo.name.toLowerCase().indexOf(q.toLowerCase()) !== -1;
     });
     //console.log(req.query);
     res.render('todos/index', {
